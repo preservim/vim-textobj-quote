@@ -18,7 +18,7 @@ endfunction
 function! s:educateQuotes(mode)
   " intelligently insert curly quotes
   " mode=1 is double; mode=0 is single
-  let l:regex = textobj#quote#get_regex(a:mode) . '%#'
+  let l:regex = textobj#quote#getRegex(a:mode) . '%#'
   return search(l:regex, 'n')
        \ ? (a:mode ? b:textobj_quote_dl : b:textobj_quote_sl)
        \ : (a:mode ? b:textobj_quote_dr : b:textobj_quote_sr)

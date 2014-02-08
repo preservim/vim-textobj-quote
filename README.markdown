@@ -2,7 +2,7 @@
 
 > “Extending Vim to better support typographic (‘curly’) quote characters.”
 
-**This project will soon replace [vim-quotable][vq], which will be deprecated.**
+*This project replaces the now-deprecated [vim-quotable][vq]*
 
 [vq]: https://github.com/reedes/vim-quotable
 
@@ -14,10 +14,12 @@ the prose and documentation they write.
 
 Core features of this plugin:
 
-* Text object supporting configurable “typographic quotes”
-* Implemented with regular expressions via the [kana/vim-textobj-user][vt]
-  plugin
+* Text object supporting “typographic quotes”
+* Implemented with regular expressions via the [kana/vim-textobj-user][vt] plugin
 * Supports quoted strings containing contractions (”don’t”, e.g.)
+* Configurable to support [international variations in quotation marks][iq]
+
+[iq]: http://en.wikipedia.org/wiki/International_variation_in_quotation_marks
 
 Includes four additional features:
 
@@ -56,36 +58,6 @@ augroup textobj_quote
   autocmd FileType markdown call textobj#quote#init()
   autocmd FileType textile call textobj#quote#init()
 augroup END
-```
-
-### International support
-
-Many international keyboards feature keys to allow you to input
-typographic quote characters directly. In such cases, you won’t need to
-change the behavior of the straight quote keys.
-
-But if you do, you can override the defaults. For example, those users
-editing most of their prose in German could change those defaults to:
-
-```vim
-let g:textobj#quote#doubleDefault = '„“'     " „doppel“
-let g:textobj#quote#singleDefault = '‚‘'     " ‚einzel‘
-```
-
-Or on a file type initialization...
-
-```vim
-augroup textobj_quote
-  autocmd!
-  autocmd FileType markdown call textobj#quote#init({ 'double':'„“', 'single':'‚‘' })
-  ...
-augroup END
-```
-
-Or in a key mapping...
-
-```vim
-nnoremap <silent> <leader>qd :call textobj#quote#init({ 'double':'„“', 'single':'‚‘' })<cr>
 ```
 
 ## Motion commands
@@ -145,6 +117,19 @@ type:
 School to be called ‘mister,’ thank you very much.”
 ```
 
+You can configure the _educate_ feature in your `.vimrc`:
+
+```
+let g:textobj#quote#educate = 1       " 0=disable, 1=enable (def)
+```
+
+You can enable (or toggle) the educating behavior with the following 
+commands:
+
+* `Educate`
+* `NoEducate`
+* `ToggleEducate`
+
 #### Entering straight quotes
 
 In some cases, straight (ASCII) quotes are needed, such as:
@@ -166,22 +151,19 @@ Standing at 7′3″ (2.21 m), Hasheem Thabeet of the Oklahoma City Thunder is t
 player in the NBA.
 ```
 
-#### Commands
-
-You can enable (or toggle) the educating behavior with the following 
-commands:
-
-* `Educate`
-* `NoEducate`
-* `ToggleEducate`
-
-## Matchit support
+### Matchit support
 
 Matchit enables jumping to matching quotes.
 
 * `%` - jump to the matching typographic (curly) quote character
 
-## Replace support
+You can configure the _MatchIt_ feature in your `.vimrc`:
+
+```
+let g:textobj#quote#matchit = 1       " 0=disable, 1=enable (def)
+```
+
+### Replace support
 
 You can replace straight quotes in existing text with curly quotes, and
 visa versa. Add key mappings of your choice to your `.vimrc`:
@@ -196,7 +178,7 @@ Both _Normal_ and _Visual_ modes are supported by this feature.
 To transform all quotes in a document, use _Visual_ mode to select all the
 text in the document.
 
-## Surround support
+### Surround support
 
 This plugin supports basic surround capabilities. Add to your `.vimrc` key
 mappings of your choice:
@@ -252,6 +234,36 @@ character.
 For more details, see:
 
 * `:help digraphs`
+
+## International support
+
+Many international keyboards feature keys to allow you to input
+typographic quote characters directly. In such cases, you won’t need to
+change the behavior of the straight quote keys.
+
+But if you do, you can override the defaults. For example, those users
+editing most of their prose in German could change those defaults to:
+
+```vim
+let g:textobj#quote#doubleDefault = '„“'     " „doppel“
+let g:textobj#quote#singleDefault = '‚‘'     " ‚einzel‘
+```
+
+Or on a file type initialization...
+
+```vim
+augroup textobj_quote
+  autocmd!
+  autocmd FileType markdown call textobj#quote#init({ 'double':'„“', 'single':'‚‘' })
+  ...
+augroup END
+```
+
+Or in a key mapping...
+
+```vim
+nnoremap <silent> <leader>qd :call textobj#quote#init({ 'double':'„“', 'single':'‚‘' })<cr>
+```
 
 ## See also
 

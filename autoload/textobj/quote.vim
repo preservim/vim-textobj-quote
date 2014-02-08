@@ -17,7 +17,7 @@ function! s:unicode_enabled()
   return &encoding == 'utf-8'
 endfunction
 
-function! textobj#quote#get_regex(mode)
+function! textobj#quote#getRegex(mode)
   " regex to match previous character
   " mode=1 is double; mode=0 is single
   return '\v(^|[[({& ' .
@@ -62,7 +62,7 @@ function! textobj#quote#init(...)
 
   " initialize extensions
 
-  if get(l:args, 'match', g:textobj#quote#match) &&
+  if get(l:args, 'match', g:textobj#quote#matchit) &&
    \ exists("b:match_words")
     " support '%' navigation of textobj_quote pairs
     if b:textobj_quote_dl != b:textobj_quote_dr
@@ -76,10 +76,6 @@ function! textobj#quote#init(...)
   if get(l:args, 'educate', g:textobj#quote#educate)
     call textobj#quote#educate#mapKeys(1)
   endif
-  "if get(l:args, 'replace', g:textobj#quote#replace)
-  "endif
-  "if get(l:args, 'surround', g:textobj#quote#surround)
-  "endif
 
 endfunction
 

@@ -26,8 +26,8 @@ function! textobj#quote#replace#replace(mode, visual)
     let l:text = substitute(l:text, '[' . b:textobj_quote_sl . b:textobj_quote_sr . ']', "'", 'g')
     let l:text = substitute(l:text, '[' . b:textobj_quote_dl . b:textobj_quote_dr . ']', '"', 'g')
   else                " replace straight with curly
-    let l:text = substitute(l:text, textobj#quote#get_regex(0) . '\zs''', b:textobj_quote_sl, 'g')
-    let l:text = substitute(l:text, textobj#quote#get_regex(1) . '\zs"' , b:textobj_quote_dl, 'g')
+    let l:text = substitute(l:text, textobj#quote#getRegex(0) . '\zs''', b:textobj_quote_sl, 'g')
+    let l:text = substitute(l:text, textobj#quote#getRegex(1) . '\zs"' , b:textobj_quote_dl, 'g')
     let l:text = substitute(l:text, "'", b:textobj_quote_sr, 'g')
     let l:text = substitute(l:text, '"', b:textobj_quote_dr, 'g')
   endif
