@@ -1,7 +1,7 @@
 Execute (Clean up test environment):
   call textobj#quote#init({'surround':1})
-  map <silent> ; <Plug>QuoteSurroundDouble
-  map <silent> \ <Plug>QuoteSurroundSingle
+  map <silent> ; <Plug>SurroundWithDouble
+  map <silent> \ <Plug>SurroundWithSingle
 
 ###########################################################
 

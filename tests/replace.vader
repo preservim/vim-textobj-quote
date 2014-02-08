@@ -1,7 +1,7 @@
 Execute (Clean up test environment):
   call textobj#quote#init({'replace':1})
-  map <silent> ; <Plug>QuoteReplaceWithCurly
-  map <silent> \ <Plug>QuoteReplaceWithStraight
+  map <silent> ; <Plug>ReplaceWithCurly
+  map <silent> \ <Plug>ReplaceWithStraight
 
 ###########################################################
 
