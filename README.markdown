@@ -2,6 +2,10 @@
 
 > “Extending Vim to better support typographic (‘curly’) quote characters.”
 
+**This project will soon replace [vim-quotable][vq], which will be deprecated.**
+
+[vq]: https://github.com/reedes/vim-quotable
+
 While Vim is renown for its text manipulation capabilities, it
 nevertheless retains a bias towards ASCII that stretches back to its vi
 roots on Unix. This can limit Vim’s appeal for those who prefer
