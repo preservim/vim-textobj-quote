@@ -14,7 +14,7 @@ the prose and documentation they write.
 
 Core features of this plugin:
 
-* Text object supporting “typographic quotes”
+* Text object supporting “typographic quotes”, incl. motion commands
 * Implemented with regular expressions via the [kana/vim-textobj-user][vt] plugin
 * Supports quoted strings containing contractions (”don’t”, e.g.)
 * Configurable to support [international variations in quotation marks][iq]
@@ -23,10 +23,10 @@ Core features of this plugin:
 
 Includes four additional features:
 
-* Educate - automatic entry of ‘typographic quotes’ from the 'straight quote' keys
-* Replace - transform quotes from straight to typographic, and visa versa
-* Matchit - `%` matching for typographic quote pairs
-* Surround - surround a word or visual selection with quotes
+* _educate_ - automatic entry of ‘typographic quotes’ from the 'straight quote' keys
+* _replace_ - transform quotes from straight to typographic, and visa versa
+* _matchit_ - `%` matching for typographic quote pairs
+* _surround_ - surround a word or visual selection with quotes
 
 ## Requirements
 
@@ -51,14 +51,19 @@ typographic quote support in `markdown` and `textile` files, place in your
 `.vimrc`:
 
 ```vim
+set nocompatible
 filetype plugin indent on       " may already be in your .vimrc
 
 augroup textobj_quote
   autocmd!
   autocmd FileType markdown call textobj#quote#init()
   autocmd FileType textile call textobj#quote#init()
+  autocmd FileType text call textobj#quote#init({'educate': 0})
 augroup END
 ```
+
+The last statement initializes the plugin for buffers of `text` file type, but
+disables the ‘educate’ feature by default. More on that below.
 
 ## Motion commands
 
@@ -89,10 +94,10 @@ let g:textobj#quote#doubleMotion = 'q'
 let g:textobj#quote#singleMotion = 'Q'
 ```
 
-## Features
+## Additional features
 
-The four additional features of this plugin include: educate, Matchit,
-replace, and surround.
+The four additional features of this plugin include: _educate_, _matchit_,
+_replace_, and _surround_.
 
 ### Educate
 
@@ -147,17 +152,17 @@ Note that for units of measurement you’ll want to use the prime symbol rather
 than straight quotes, as in:
 
 ```
-Standing at 7′3″ (2.21 m), Hasheem Thabeet of the Oklahoma City Thunder is the tallest
-player in the NBA.
+Standing at 7′3″ (2.21 m), Hasheem Thabeet of the Oklahoma City Thunder 
+is the tallest player in the NBA.
 ```
 
 ### Matchit support
 
-Matchit enables jumping to matching quotes.
+_matchit_ enables jumping to matching typographic quotes.
 
 * `%` - jump to the matching typographic (curly) quote character
 
-You can configure the _MatchIt_ feature in your `.vimrc`:
+You can configure this feature in your `.vimrc`:
 
 ```
 let g:textobj#quote#matchit = 1       " 0=disable, 1=enable (def)
@@ -180,7 +185,7 @@ text in the document.
 
 ### Surround support
 
-This plugin supports basic surround capabilities. Add to your `.vimrc` key
+This feature supports basic surround capabilities. Add to your `.vimrc` key
 mappings of your choice:
 
 ```vim
@@ -292,5 +297,7 @@ If you find this plugin useful, check out these others by [@reedes][re]:
 
 If you’ve spotted a problem or have an idea on improving this plugin,
 please post it to the github project issue page.
+
+Needs better integration with existing surround plugins.
 
 <!-- vim: set tw=74 :-->
