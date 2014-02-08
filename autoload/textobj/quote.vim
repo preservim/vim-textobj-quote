@@ -20,7 +20,7 @@ endfunction
 function! textobj#quote#get_regex(mode)
   " regex to match previous character
   " mode=1 is double; mode=0 is single
-  return '\v(^|[ ' .
+  return '\v(^|[[({& ' .
         \ (a:mode
         \   ? (b:textobj_quote_sl . '''])')
         \   : (b:textobj_quote_dl . '"])'))

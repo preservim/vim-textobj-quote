@@ -15,7 +15,7 @@ the prose and documentation they write.
 Core features of this plugin:
 
 * Text object supporting configurable “typographic quotes”
-* Implemented with regular expressions via the [vim-textobj-user][vt]
+* Implemented with regular expressions via the [kana/vim-textobj-user][vt]
   plugin
 * Supports quoted strings containing contractions (”don’t”, e.g.)
 

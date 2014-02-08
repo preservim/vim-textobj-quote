@@ -35,11 +35,21 @@ Expect:
 
 Given:
 
-Do (educate with alternative quote characters):
-  :call textobj#quote#init({ 'double':'„“', 'single':'‚‘' })\<Enter>
-  a"Es ist 'Doktor' Böse, ich danke Ihnen sehr."
+Do (educate double with various previous chars):
+  a" (" )" {" [" ]" &" ." ?" !" ," ;" '" ‘" ’" “" ”"
 
 Expect:
-  „Es ist ‚Doktor‘ Böse, ich danke Ihnen sehr.“
+  “ (“ )” {“ [“ ]” &“ .” ?” !” ,” ;” ‘“ ‘“ ’” “” ””
 
 ###########################################################
+
+Given:
+
+Do (educate single quote with various previous chars):
+  a' (' )' {' [' ]' &' .' ?' !' ,' ;' '' ‘' ’' “' ”'
+
+Expect:
+  ‘ (‘ )’ {‘ [‘ ]’ &‘ .’ ?’ !’ ,’ ;’ ‘’ ‘’ ’’ “‘ ”’
+
+###########################################################
+
