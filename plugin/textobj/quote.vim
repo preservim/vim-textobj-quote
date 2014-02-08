@@ -50,15 +50,15 @@ command! -nargs=0 NoEducate call textobj#quote#educate#mapKeys(0)
 command! -nargs=0 ToggleEducate call textobj#quote#educate#toggleMappings()
 
 " replace quotes in bulk
-nnoremap <Plug>QuoteReplaceWithCurly    :call textobj#quote#replace#replace(1, '')<cr>
-vnoremap <Plug>QuoteReplaceWithCurly    :<C-u>call textobj#quote#replace#replace(1, visualmode())<cr>
-nnoremap <Plug>QuoteReplaceWithStraight :call textobj#quote#replace#replace(0, '')<cr>
-vnoremap <Plug>QuoteReplaceWithStraight :<C-u>call textobj#quote#replace#replace(0, visualmode())<cr>
+nnoremap <Plug>ReplaceWithCurly    :call textobj#quote#replace#replace(1, '')<cr>
+vnoremap <Plug>ReplaceWithCurly    :<C-u>call textobj#quote#replace#replace(1, visualmode())<cr>
+nnoremap <Plug>ReplaceWithStraight :call textobj#quote#replace#replace(0, '')<cr>
+vnoremap <Plug>ReplaceWithStraight :<C-u>call textobj#quote#replace#replace(0, visualmode())<cr>
 
 " a simple alterative to tpope/vim-surround
-nnoremap <Plug>QuoteSurroundDouble :call textobj#quote#surround#surround(1, '')<cr>
-vnoremap <Plug>QuoteSurroundDouble :<C-u>call textobj#quote#surround#surround(1, visualmode())<cr>
-nnoremap <Plug>QuoteSurroundSingle :call textobj#quote#surround#surround(0, '')<cr>
-vnoremap <Plug>QuoteSurroundSingle :<C-u>call textobj#quote#surround#surround(0, visualmode())<cr>
+nnoremap <Plug>SurroundWithDouble :call textobj#quote#surround#surround(1, '')<cr>
+vnoremap <Plug>SurroundWithDouble :<C-u>call textobj#quote#surround#surround(1, visualmode())<cr>
+nnoremap <Plug>SurroundWithSingle :call textobj#quote#surround#surround(0, '')<cr>
+vnoremap <Plug>SurroundWithSingle :<C-u>call textobj#quote#surround#surround(0, visualmode())<cr>
 
 let g:loaded_textobj_quote = 1

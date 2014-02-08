@@ -67,17 +67,21 @@ disables the ‘educate’ feature by default. More on that below.
 
 ## Motion commands
 
+Motion commands on text objects are a powerful feature of Vim.
+
 By default, for motion commands, `q` denotes an operation on “double”
 quotes and `Q` denotes an operation on ‘single’ quotes. For example, with
 the `c` change operator:
 
-* `ciq` - [Change Inside “double” quotes] - excludes quote chars
-* `ciQ` - [Change Inside ‘single’ quotes] - excludes quote chars
-* `caq` - [Change Around “double” quotes] - includes quote chars
-* `caQ` - [Change Around ‘single’ quotes] - includes quote chars
+* `caq` - change _around_ “double” quotes - includes quote chars
+* `ciq` - change _inside_ “double” quotes - excludes quote chars
+* `caQ` - change _around_ ‘single’ quotes - includes quote chars
+* `ciQ` - change _inside_ ‘single’ quotes - excludes quote chars
 
-Apart from `c` for change, you can `v` for visual selection, `d` for deletion,
-`y` for yanking to clipboard, etc.
+Apart from `c` for change, you can `v` for visual selection, `d` for
+deletion, `y` for yanking to clipboard, etc. Note that count isn’t
+supported at present (due to limitations of the underlying
+vim-textobj-user) but repeat with `.` does work.
 
 _quote_’s motion command is smart too, able to distinguish between an
 apostrophe and single closing quote, even though both are represented by
@@ -174,8 +178,8 @@ You can replace straight quotes in existing text with curly quotes, and
 visa versa. Add key mappings of your choice to your `.vimrc`:
 
 ```
-map <silent> <leader>qc <Plug>QuoteReplaceWithCurly
-map <silent> <leader>qs <Plug>QuoteReplaceWithStraight
+map <silent> <leader>qc <Plug>ReplaceWithCurly
+map <silent> <leader>qs <Plug>ReplaceWithStraight
 ```
 
 Both _Normal_ and _Visual_ modes are supported by this feature.
@@ -189,9 +193,9 @@ This feature supports basic surround capabilities. Add to your `.vimrc` key
 mappings of your choice:
 
 ```vim
-" NOTE: be sure to remove these mappings if using the tpope/vim-surround plugin!
-map <silent> Sq <Plug>QuoteSurroundDouble
-map <silent> SQ <Plug>QuoteSurroundSingle
+" NOTE: be sure to remove/change these mappings if using the tpope/vim-surround plugin!
+map <silent> Sq <Plug>SurroundWithDouble
+map <silent> SQ <Plug>SurroundWithSingle
 ```
 
 Then you can use motion commands to surround your text with quotes:
