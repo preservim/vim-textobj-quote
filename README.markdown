@@ -185,8 +185,8 @@ mappings of your choice:
 
 ```vim
 " NOTE: be sure to remove these mappings if using the tpope/vim-surround plugin!
-map <silent> Sq <Plug>QuotableSurroundDouble
-map <silent> SQ <Plug>QuotableSurroundSingle
+map <silent> Sq <Plug>QuoteSurroundDouble
+map <silent> SQ <Plug>QuoteSurroundSingle
 ```
 
 Then you can use motion commands to surround your text with quotes:
