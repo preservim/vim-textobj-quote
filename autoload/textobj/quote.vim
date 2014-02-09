@@ -77,6 +77,14 @@ function! textobj#quote#init(...)
     call textobj#quote#educate#mapKeys(1)
   endif
 
+  " q/Q support for tpope/vim-surround
+  let l:char = g:textobj#quote#doubleMotion
+  let l:nr = char2nr(l:char)
+  exe 'let b:surround_' . l:nr . ' = b:textobj_quote_dl . "\r" . b:textobj_quote_dr'
+  let l:char = g:textobj#quote#singleMotion
+  let l:nr = char2nr(l:char)
+  exe 'let b:surround_' . l:nr . ' = b:textobj_quote_sl . "\r" . b:textobj_quote_sr'
+
 endfunction
 
 let g:autoloaded_textobj_quote = 1

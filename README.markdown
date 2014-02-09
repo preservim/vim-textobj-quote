@@ -2,7 +2,7 @@
 
 > “Extending Vim to better support typographic (‘curly’) quote characters.”
 
-*This project replaces the now-deprecated [vim-quotable][vq]*
+*Note: this project replaces the recently-deprecated [vim-quotable][vq]*
 
 [vq]: https://github.com/reedes/vim-quotable
 
@@ -62,8 +62,9 @@ augroup textobj_quote
 augroup END
 ```
 
-The last statement initializes the plugin for buffers of `text` file type, but
-disables the ‘educate’ feature by default. More on that below.
+The last `autocmd` statement initializes the plugin for buffers of `text`
+file type, but disables the ‘educate’ feature by default. More on that
+below.
 
 ## Motion commands
 
@@ -105,39 +106,42 @@ _replace_, and _surround_.
 
 ### Educate
 
-This plugin will ‘educate’ quotes, meaning that it will dynamically
-transform straight quote key presses (`"` or `'`) into corresponding
-typographic quote characters.
+This plugin will ‘educate’ quotes, meaning that while in _Insert_ mode,
+your straight quote key presses (`"` or `'`) will be dynamically
+transformed into the appropriate typographic quote characters.
 
-For example, entering the following sentence without this plugin using the
-straight quote keys:
+For example, entering the following sentence without the _educate_ feature
+using the straight quote keys:
 
 ```
 "It's Dr. Evil. I didn't spend six years in Evil Medical 
 School to be called 'mister,' thank you very much."
 ```
 
-As expected all the quotes are straight ones. But with this plugin, the
-straight quotes are transformed into the typographic equivalent as you
-type:
+As expected all the quotes are straight ones. But with the _educate_
+feature, the straight quotes are transformed into the typographic
+equivalent as you type:
 
 ```
 ”It’s Dr. Evil. I didn’t spend six years in Evil Medical 
 School to be called ‘mister,’ thank you very much.”
 ```
 
-You can configure the _educate_ feature in your `.vimrc`:
+You can configure the default settings for the _educate_ feature in your
+`.vimrc`:
 
 ```
 let g:textobj#quote#educate = 1       " 0=disable, 1=enable (def)
 ```
 
-You can enable (or toggle) the educating behavior with the following 
-commands:
+You can change educating behavior with the following commands:
 
 * `Educate`
 * `NoEducate`
 * `ToggleEducate`
+
+As seen above, educating behavior can be configured as a parameter in the
+`textobj#quote#init()` call.
 
 #### Entering straight quotes
 
@@ -147,13 +151,14 @@ In some cases, straight (ASCII) quotes are needed, such as:
 “print "Hello World!"” is a simple program you can write in Python.
 ```
 
-To insert a straight quote while educating, enter `«Ctrl-V»` before the quote key:
+To insert a straight quote while educating, enter `«Ctrl-V»` (mnemonic is
+_verbatim_) before the quote key:
 
 * `«Ctrl-V» "` - straight double quote
 * `«Ctrl-V» '` - straight single quote
 
-Note that for units of measurement you’ll want to use the prime symbol rather
-than straight quotes, as in:
+Note that for units of measurement you’ll want to use the prime symbol(s)
+rather than straight quotes, as in:
 
 ```
 Standing at 7′3″ (2.21 m), Hasheem Thabeet of the Oklahoma City Thunder 
@@ -189,21 +194,37 @@ text in the document.
 
 ### Surround support
 
-This feature supports basic surround capabilities. Add to your `.vimrc` key
-mappings of your choice:
+By default there are no key mappings for `surround` support.
+
+#### Basic support
+
+This feature supports basic surround capabilities. Add to your `.vimrc`
+key mappings of your choice:
 
 ```vim
-" NOTE: be sure to remove/change these mappings if using the tpope/vim-surround plugin!
+" NOTE: remove these mappings if using the tpope/vim-surround plugin!
 map <silent> Sq <Plug>SurroundWithDouble
 map <silent> SQ <Plug>SurroundWithSingle
 ```
 
-Then you can use motion commands to surround your text with quotes:
+Then you can use ‘motion commands’ to surround text with quotes:
 
 (an asterisk is used to denote the cursor position)
 
 * `visSq` - My senten*ce. => “My sentence.”
 * `visSQ` - My senten*ce. => ‘My sentence.’
+
+#### Using Tim Pope’s vim-surround
+
+Using Tim Pope’s [vim-surround][] plugin your text object key mappings
+should be available. For example,
+
+* `cs'q` - 'Hello W*orld' => “Hello World”
+* `cs"q` - "Hello W*orld" => “Hello World”
+* `cs(q` - (Hello W*orld) => “Hello World”
+* `cs(Q` - (Hello W*orld) => ‘Hello World’
+
+[vim-surround]: https://github.com/tpope/vim-surround
 
 ## Entering special characters
 
