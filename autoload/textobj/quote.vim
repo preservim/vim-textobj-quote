@@ -91,28 +91,11 @@ function! textobj#quote#init(...)
   let b:textobj_quote_sl = l:s_arg[0]
   let b:textobj_quote_sr = l:s_arg[1]
 
-  " specialized closing patterns to ignore use of quote in contractions
-  let l:special_dr =
-      \ b:textobj_quote_dr .
-      \ (b:textobj_quote_dr == '’'
-      \  ? '([^A-Za-z]|$)'
-      \  : '')
-  let l:special_sr =
-      \ b:textobj_quote_sr .
-      \ (b:textobj_quote_sr == '’'
-      \  ? '([^A-Za-z]|$)'
-      \  : '')
-
   " the 'inner' and 'outer' patterns used in select functions
   let b:textobj_quote_re_d_i = s:get_select_re(b:textobj_quote_dl, b:textobj_quote_dr, 1)
   let b:textobj_quote_re_d_a = s:get_select_re(b:textobj_quote_dl, b:textobj_quote_dr, 0)
   let b:textobj_quote_re_s_i = s:get_select_re(b:textobj_quote_sl, b:textobj_quote_sr, 1)
   let b:textobj_quote_re_s_a = s:get_select_re(b:textobj_quote_sl, b:textobj_quote_sr, 0)
-
-  " pattern for jumping among quotes
-  let b:textobj_quote_re_jump =
-      \ '\v[' . b:textobj_quote_dl . b:textobj_quote_sl . ']\_.{-}' .
-      \ '((' . l:special_dr . ')|(' . l:special_sr . '))'
 
   call textobj#user#plugin('quote', {
   \      'select-d': {
@@ -126,13 +109,6 @@ function! textobj#quote#init(...)
   \         'select-i': 'i' . g:textobj#quote#singleMotion,
   \         '*select-a-function*': 'textobj#quote#select_s_a',
   \         '*select-i-function*': 'textobj#quote#select_s_i',
-  \      },
-  \      'move': {
-  \         'pattern': b:textobj_quote_re_jump,
-  \         'move-p': g:textobj#quote#move_p,
-  \         'move-n': g:textobj#quote#move_n,
-  \         'move-P': g:textobj#quote#move_P,
-  \         'move-N': g:textobj#quote#move_N,
   \      },
   \})
 
