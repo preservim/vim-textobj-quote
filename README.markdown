@@ -123,7 +123,7 @@ feature, the straight quotes are transformed into the typographic
 equivalent as you type:
 
 ```
-”It’s Dr. Evil. I didn’t spend six years in Evil Medical 
+“It’s Dr. Evil. I didn’t spend six years in Evil Medical 
 School to be called ‘mister,’ thank you very much.”
 ```
 
