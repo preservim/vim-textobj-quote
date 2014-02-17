@@ -95,8 +95,8 @@ the same glyph. For example, try out `viQ` on the following sentence:
 You can change these key mappings from their defaults in your `.vimrc`:
 
 ```vim
-let g:textobj#quote#doubleSelect = 'q'
-let g:textobj#quote#singleSelect = 'Q'
+let g:textobj#quote#doubleMotion = 'q'
+let g:textobj#quote#singleMotion = 'Q'
 ```
 
 ## Additional features

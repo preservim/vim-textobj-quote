@@ -116,14 +116,14 @@ function! textobj#quote#init(...)
 
   call textobj#user#plugin('quote', {
   \      'select-d': {
-  \         'select-a': 'a' . g:textobj#quote#doubleSelect,
-  \         'select-i': 'i' . g:textobj#quote#doubleSelect,
+  \         'select-a': 'a' . g:textobj#quote#doubleMotion,
+  \         'select-i': 'i' . g:textobj#quote#doubleMotion,
   \         '*select-a-function*': 'textobj#quote#select_d_a',
   \         '*select-i-function*': 'textobj#quote#select_d_i',
   \      },
   \      'select-s': {
-  \         'select-a': 'a' . g:textobj#quote#singleSelect,
-  \         'select-i': 'i' . g:textobj#quote#singleSelect,
+  \         'select-a': 'a' . g:textobj#quote#singleMotion,
+  \         'select-i': 'i' . g:textobj#quote#singleMotion,
   \         '*select-a-function*': 'textobj#quote#select_s_a',
   \         '*select-i-function*': 'textobj#quote#select_s_i',
   \      },
@@ -164,10 +164,10 @@ function! textobj#quote#init(...)
   endif
 
   " q/Q support for tpope/vim-surround
-  let l:char = g:textobj#quote#doubleSelect
+  let l:char = g:textobj#quote#doubleMotion
   let l:nr = char2nr(l:char)
   exe 'let b:surround_' . l:nr . ' = b:textobj_quote_dl . "\r" . b:textobj_quote_dr'
-  let l:char = g:textobj#quote#singleSelect
+  let l:char = g:textobj#quote#singleMotion
   let l:nr = char2nr(l:char)
   exe 'let b:surround_' . l:nr . ' = b:textobj_quote_sl . "\r" . b:textobj_quote_sr'
 

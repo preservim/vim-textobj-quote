@@ -10,11 +10,11 @@ scriptencoding utf-8
 
 if exists('g:loaded_textobj_quote') | finish | endif
 
-if !exists('g:textobj#quote#doubleSelect')
-  let g:textobj#quote#doubleSelect = 'q'
+if !exists('g:textobj#quote#doubleMotion')
+  let g:textobj#quote#doubleMotion = 'q'
 endif
-if !exists('g:textobj#quote#singleSelect')
-  let g:textobj#quote#singleSelect = 'Q'
+if !exists('g:textobj#quote#singleMotion')
+  let g:textobj#quote#singleMotion = 'Q'
 endif
 
 if !exists('g:textobj#quote#move_p')
