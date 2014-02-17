@@ -109,7 +109,7 @@ function! textobj#quote#init(...)
   let b:textobj_quote_re_s_i = s:get_select_re(b:textobj_quote_sl, b:textobj_quote_sr, 1)
   let b:textobj_quote_re_s_a = s:get_select_re(b:textobj_quote_sl, b:textobj_quote_sr, 0)
 
-  " pattern for jumping
+  " pattern for jumping among quotes
   let b:textobj_quote_re_jump =
       \ '\v[' . b:textobj_quote_dl . b:textobj_quote_sl . ']\_.{-}' .
       \ '((' . l:special_dr . ')|(' . l:special_sr . '))'
