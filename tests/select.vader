@@ -59,3 +59,15 @@ Do (select single over multiple lines):
 Expect:
   “It’s Dr. Evil. I didn’t spend six years in ‘EVIL MEDICAL
   SCHOOL’ to be called ‘mister,’ thank you very much.”
+
+###########################################################
+
+Given:
+  ‘Really, I’d rather not relive the ’70s,’ said zombie Elvis.
+
+Do (select single over multiple lines):
+  viQU
+
+Expect:
+  ‘REALLY, I’D RATHER NOT RELIVE THE ’70S,’ said zombie Elvis.
+

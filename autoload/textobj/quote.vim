@@ -20,14 +20,13 @@ endfunction
 " generate a regex for select, allowing for contractions
 function! s:get_select_re(l, r, inner)
   return
-    \ '\v(' .
+    \ '\v' .
     \ a:l .
     \ (a:inner ? '\zs' : '') .
     \ '\_.{-}' .
     \ (a:inner ? '\ze' : '') .
     \ a:r .
-    \ (a:r == '’' ? '(\a)@!' : '') .
-    \ ')'
+    \ (a:r == '’' ? '(\w)@!' : '')
 endfunction
 
 function! s:select(pattern)
