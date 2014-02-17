@@ -52,7 +52,7 @@ typographic quote support in `markdown` and `textile` files, place in your
 
 ```vim
 set nocompatible
-filetype plugin indent on       " may already be in your .vimrc
+filetype plugin on       " may already be in your .vimrc
 
 augroup textobj_quote
   autocmd!
@@ -71,8 +71,8 @@ below.
 Motion commands on text objects are a powerful feature of Vim.
 
 By default, for motion commands, `q` denotes an operation on “double”
-quotes and `Q` denotes an operation on ‘single’ quotes. For example, with
-the `c` change operator:
+quotes. `Q` for ‘single’ quotes. For example, with the `c` change
+operator:
 
 * `caq` - change _around_ “double” quotes - includes quote chars
 * `ciq` - change _inside_ “double” quotes - excludes quote chars
@@ -82,7 +82,7 @@ the `c` change operator:
 Apart from `c` for change, you can `v` for visual selection, `d` for
 deletion, `y` for yanking to clipboard, etc. Note that count isn’t
 supported at present (due to limitations of the underlying
-vim-textobj-user) but repeat with `.` does work.
+vim-textobj-user) but repeat with `.` should work.
 
 _quote_’s motion command is smart too, able to distinguish between an
 apostrophe and single closing quote, even though both are represented by
@@ -95,8 +95,8 @@ the same glyph. For example, try out `viQ` on the following sentence:
 You can change these key mappings from their defaults in your `.vimrc`:
 
 ```vim
-let g:textobj#quote#doubleMotion = 'q'
-let g:textobj#quote#singleMotion = 'Q'
+let g:textobj#quote#doubleSelect = 'q'
+let g:textobj#quote#singleSelect = 'Q'
 ```
 
 ## Additional features

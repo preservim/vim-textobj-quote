@@ -18,8 +18,9 @@ endfunction
 function! s:educateQuotes(mode)
   " intelligently insert curly quotes
   " mode=1 is double; mode=0 is single
-  let l:regex = textobj#quote#getRegex(a:mode) . '%#'
-  return search(l:regex, 'n')
+  return search(
+       \    textobj#quote#getPrevCharRE(a:mode) . '%#',
+       \    'n')
        \ ? (a:mode ? b:textobj_quote_dl : b:textobj_quote_sl)
        \ : (a:mode ? b:textobj_quote_dr : b:textobj_quote_sr)
 endfunction
@@ -34,6 +35,7 @@ function! textobj#quote#educate#mapKeys(...)
   endif
   if b:textobj_quote_educate_mapped
     " For details on the leading <C-R>, see :help ins-special-special
+    " TODO use <expr> instead?
     inoremap <buffer> " <C-R>=<SID>educateQuotes(1)<CR>
     inoremap <buffer> ' <C-R>=<SID>educateQuotes(0)<CR>
   else
