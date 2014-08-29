@@ -114,7 +114,7 @@ For example, entering the following sentence without the _educate_ feature
 using the straight quote keys:
 
 ```
-"It's Dr. Evil. I didn't spend six years in Evil Medical 
+"It's Dr. Evil. I didn't spend six years in Evil Medical
 School to be called 'mister,' thank you very much."
 ```
 
@@ -123,14 +123,14 @@ feature, the straight quotes are transformed into the typographic
 equivalent as you type:
 
 ```
-“It’s Dr. Evil. I didn’t spend six years in Evil Medical 
+“It’s Dr. Evil. I didn’t spend six years in Evil Medical
 School to be called ‘mister,’ thank you very much.”
 ```
 
 You can configure the default settings for the _educate_ feature in your
 `.vimrc`:
 
-```
+```vim
 let g:textobj#quote#educate = 1       " 0=disable, 1=enable (def)
 ```
 
@@ -161,7 +161,7 @@ Note that for units of measurement you’ll want to use the prime symbol(s)
 rather than straight quotes, as in:
 
 ```
-Standing at 7′3″ (2.21 m), Hasheem Thabeet of the Oklahoma City Thunder 
+Standing at 7′3″ (2.21 m), Hasheem Thabeet of the Oklahoma City Thunder
 is the tallest player in the NBA.
 ```
 
@@ -173,7 +173,7 @@ _matchit_ enables jumping to matching typographic quotes.
 
 You can configure this feature in your `.vimrc`:
 
-```
+```vim
 let g:textobj#quote#matchit = 1       " 0=disable, 1=enable (def)
 ```
 
@@ -182,7 +182,7 @@ let g:textobj#quote#matchit = 1       " 0=disable, 1=enable (def)
 You can replace straight quotes in existing text with curly quotes, and
 visa versa. Add key mappings of your choice to your `.vimrc`:
 
-```
+```vim
 map <silent> <leader>qc <Plug>ReplaceWithCurly
 map <silent> <leader>qs <Plug>ReplaceWithStraight
 ```
@@ -211,18 +211,18 @@ Then you can use ‘motion commands’ to surround text with quotes:
 
 (an asterisk is used to denote the cursor position)
 
-* `visSq` - My senten*ce. => “My sentence.”
-* `visSQ` - My senten*ce. => ‘My sentence.’
+* `visSq` - My senten\*ce. => “My sentence.”
+* `visSQ` - My senten\*ce. => ‘My sentence.’
 
 #### Using Tim Pope’s vim-surround
 
 Using Tim Pope’s [vim-surround][] plugin your text object key mappings
 should be available. For example,
 
-* `cs'q` - 'Hello W*orld' => “Hello World”
-* `cs"q` - "Hello W*orld" => “Hello World”
-* `cs(q` - (Hello W*orld) => “Hello World”
-* `cs(Q` - (Hello W*orld) => ‘Hello World’
+* `cs'q` - 'Hello W\*orld' => “Hello World”
+* `cs"q` - "Hello W\*orld" => “Hello World”
+* `cs(q` - (Hello W\*orld) => “Hello World”
+* `cs(Q` - (Hello W\*orld) => ‘Hello World’
 
 [vim-surround]: https://github.com/tpope/vim-surround
 
@@ -302,12 +302,12 @@ If you find this plugin useful, check out these others by [@reedes][re]:
 * [vim-colors-pencil][cp] - color scheme for Vim inspired by IA Writer
 * [vim-lexical][lx] - building on Vim’s spell-check and thesaurus/dictionary completion
 * [vim-litecorrect][lc] - lightweight auto-correction for Vim
-* [vim-one][vo] - make use of Vim’s _+clientserver_ capabilities 
+* [vim-one][vo] - make use of Vim’s _+clientserver_ capabilities
 * [vim-pencil][pn] - rethinking Vim as a tool for writers
 * [vim-textobj-sentence][ts] - improving on Vim's native sentence motion command
-* [vim-thematic][th] - modify Vim’s appearance to suit your task and environment 
+* [vim-thematic][th] - modify Vim’s appearance to suit your task and environment
 * [vim-wheel][wh] - screen-anchored cursor movement for Vim
-* [vim-wordy][wo] - uncovering usage problems in writing 
+* [vim-wordy][wo] - uncovering usage problems in writing
 
 [re]: http://github.com/reedes
 [cp]: http://github.com/reedes/vim-colors-pencil
