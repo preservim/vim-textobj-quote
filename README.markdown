@@ -16,7 +16,7 @@ Core features of this plugin:
 
 * Text object supporting “typographic quotes”, incl. motion commands
 * Implemented with regular expressions via the [kana/vim-textobj-user][vt] plugin
-* Supports quoted strings containing contractions (“don’t”, e.g.)
+* Supports quoted strings containing contractions (`“don’t”`, e.g.)
 * Configurable to support [international variations in quotation marks][iq]
 
 [iq]: http://en.wikipedia.org/wiki/International_variation_in_quotation_marks
