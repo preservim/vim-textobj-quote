@@ -36,8 +36,8 @@ function! textobj#quote#educate#mapKeys(...)
   if b:textobj_quote_educate_mapped
     " For details on the leading <C-R>, see :help ins-special-special
     " TODO use <expr> instead?
-    inoremap <buffer> " <C-R>=<SID>educateQuotes(1)<CR>
-    inoremap <buffer> ' <C-R>=<SID>educateQuotes(0)<CR>
+    inoremap <silent> <buffer> " <C-R>=<SID>educateQuotes(1)<CR>
+    inoremap <silent> <buffer> ' <C-R>=<SID>educateQuotes(0)<CR>
   else
     silent! iunmap <buffer> "
     silent! iunmap <buffer> '
