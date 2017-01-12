@@ -2,7 +2,7 @@
 
 > “Extending Vim to better support typographic (‘curly’) quote characters.”
 
-*Note: this project replaces the recently-deprecated [vim-quotable][vq]*
+*Note: this project replaces the deprecated [vim-quotable][vq]*
 
 [vq]: https://github.com/reedes/vim-quotable
 
