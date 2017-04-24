@@ -1,0 +1,13 @@
+{
+  "name": "vim-textobj-quote",
+  "description": "Use ‘curly’ quote characters in Vim",
+  "version": "1.0",
+  "repository": {
+    "type": "git", "url": "git://github.com/reedes/vim-textobj-quote.git",
+    "vim_script_nr": 4811,
+    "script-type": "utility"
+  },
+  "dependencies": {
+    "textobj-user": {}
+  }
+}
