@@ -6,8 +6,6 @@
 " License:     The MIT License (MIT)
 " ============================================================================
 
-scriptencoding utf-8
-
 if &cp || (  exists('g:autoloaded_textobj_quote') &&
           \ !exists('g:force_reload_textobj_quote'))
   finish
@@ -26,7 +24,7 @@ function! s:get_select_re(l, r, inner)
     \ '\_.{-}' .
     \ (a:inner ? '\ze' : '') .
     \ a:r .
-    \ (a:r == '’' ? '(\w)@!' : '')
+    \ (a:r == '\u2019' ? '(\w)@!' : '')
 endfunction
 
 function! s:select(pattern)
@@ -74,7 +72,7 @@ endfunction
 
 " set up mappings for current buffer only
 " initialize buffer-scoped variables
-" args: { 'double':'“”', 'single':'‘’',}
+" args: { 'double':'\u201C\u201D', 'single':'\u2018\u2019',}
 function! textobj#quote#init(...)
   if !s:unicode_enabled() | return | endif
 
@@ -120,7 +118,7 @@ function! textobj#quote#init(...)
       " specialized closing pattern to ignore use of quote in contractions
       let b:match_words .= ',' . b:textobj_quote_dl .
                           \':' . b:textobj_quote_dr .
-                          \      (b:textobj_quote_dr == '’'
+                          \      (b:textobj_quote_dr == '\u2019'
                           \       ? '\(\W\|$\)'
                           \       : '')
     endif
@@ -128,7 +126,7 @@ function! textobj#quote#init(...)
       " specialized closing pattern to ignore use of quote in contractions
       let b:match_words .= ',' . b:textobj_quote_sl .
                           \':' . b:textobj_quote_sr .
-                          \      (b:textobj_quote_sr == '’'
+                          \      (b:textobj_quote_sr == '\u2019'
                           \       ? '\(\W\|$\)'
                           \       : '')
     endif
