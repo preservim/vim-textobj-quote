@@ -11,16 +11,28 @@ if exists('g:autoloaded_textobj_quote_replace') &&
   fini
 en
 
+" Copied from vim-yoink
+function! textobj#quote#replace#getDefaultReg()
+    let clipboardFlags = split(&clipboard, ',')
+    if index(clipboardFlags, 'unnamedplus') >= 0
+        return "+"
+    elseif index(clipboardFlags, 'unnamed') >= 0
+        return "*"
+    else
+        return "\""
+    endif
+endfunction
+
 function! textobj#quote#replace#replace(mode, visual)
   " 0=C->S  1=S->C
   if !exists('b:textobj_quote_dl') | return | endif
   " Extract the target text...
   if len(a:visual) > 0
-      silent normal! gvy
-  else
-      silent normal! vipy
+      execute "normal! gv\"" . textobj#quote#replace#getDefaultReg() . "y"
+    else
+      execute "normal! vi\"" . textobj#quote#replace#getDefaultReg() . "py"
   endif
-  let l:text = getreg(v:register)
+  let l:text = getreg(textobj#quote#replace#getDefaultReg())
 
   if a:mode ==# 0     " replace curly with straight
     let l:text = substitute(l:text, '[' . b:textobj_quote_sl . b:textobj_quote_sr . ']', "'", 'g')
@@ -33,8 +45,8 @@ function! textobj#quote#replace#replace(mode, visual)
   endif
 
   " Paste back into buffer in place of original...
-  call setreg(v:register, l:text, mode())
-  silent normal! gvp
+  call setreg(textobj#quote#replace#getDefaultReg(), l:text, mode())
+  execute "normal! gv\"" . textobj#quote#replace#getDefaultReg() . "p"
 endfunction
 
 let g:autoloaded_textobj_quote_replace = 1
