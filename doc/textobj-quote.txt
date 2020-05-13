@@ -1,0 +1,414 @@
+*textobj-quote.txt*	Support typographic (“‘curly’”) quote characters.
+
+==============================================================================
+CONTENTS					*textobj-quote-contents*
+
+	INTRODUCTION			|textobj-quote-introduction|
+	INSTALLATION			|textobj-quote-installation|
+	CONFIGURATION			|textobj-quote-configuration|
+	MOTION COMMANDS			|textobj-quote-motion-commands|
+	ADDITIONAL FEATURES		|textobj-quote-additional-features|
+		 EDUCATE		|textobj-quote-educate|
+		 MATCHIT		|textobj-quote-matchit|
+		 REPLACE		|textobj-quote-replace|
+		 SURROUND		|textobj-quote-surround|
+		 BASIC SURROUND		|textobj-quote-basic-surround|
+		 VIM-SURROUND		|textobj-quote-vim-surround|
+	SPECIAL CASES			|textobj-quote-special-cases|
+		 STRAIGHT QUOTES	|textobj-quote-straight-quotes|
+		 DIGRAPHS		|textobj-quote-digraphs|
+		 INTERNATIONAL USE	|textobj-quote-international-use|
+	SPELL CHECKING			|textobj-quote-spell-checking|
+	SEE ALSO			|textobj-quote-see-also|
+	FUTURE DEVELOPMENT		|textobj-quote-future-development|
+	LICENSE				|textobj-quote-license|
+
+==============================================================================
+INTRODUCTION					*textobj-quote-introduction*
+
+While Vim is renowned for its text manipulation capabilities, it nevertheless
+retains a bias towards ASCII that stretches back to its vi roots on Unix. This
+can limit Vim’s appeal for those who prefer typographic characters like “curly
+quotes” over ASCII "straight quotes" in the prose and documentation they
+write.
+
+Core features of this plugin:
+
+	- Supports “typographic quotes”, incl. motion commands
+	- Uses regular expressions via the kana/vim-textobj-user plugin
+	  https://github.com/kana/vim-textobj-user
+	- Supports quoted strings containing contractions (e.g., “don’t”)
+	  (Should this example be ‘don’t’: it’s the harder feature, right?)
+	- Can be configured for international variations in quotation marks
+	  http://en.wikipedia.org/wiki/International_variation_in_quotation_marks
+
+Four additional features:
+
+	- Replaces 'straight quotes' with ‘typographic quotes’ automatically
+	  via educate.
+	- Transforms quotes from straight to typographic, and visa versa
+	- Provides matchit matching (%) for typographic quote pairs
+	- Provides surround features: surround a word or visual selection with
+	  quotes
+
+==============================================================================
+INSTALLATION					*textobj-quote-installation*
+
+The plugin requires a recent version of Vim compiled with Unicode support. In
+addition, textobj-quote depends on kana/vim-textobject-user. You must install
+that plugin in order for text-object-quote to work.
+
+https://github.com/kana/vim-textobj-user
+
+Since Vim 8, and in corresponding versions of neovim, you can install using
+the |packages| feature. Simply clone or copy this plugin from GitHub to your
+|packpath|, which will normally be ~/.vim/pack/<your-choice>/start for vim or
+~/.config/nvim/pack/<your-choice>/start for neovim.
+
+If you prefer, install using Pathogen, Vundle, Neobundle, or your favorite Vim
+package manager.
+
+==============================================================================
+CONFIGURATION					*textobj-quote-configuration*
+
+Because you won’t want typographic quotes in your code, the behavior of this
+plugin can be configured per file type. For example, to enable typographic
+quote support in markdown and textile files, place in your .vimrc: >
+	set nocompatible
+	filetype plugin on " may already be in your .vimrc
+	augroup textobj_quote
+		autocmd!
+		autocmd FileType markdown call textobj#quote#init()
+		autocmd FileType textile call textobj#quote#init()
+		autocmd FileType text call textobj#quote#init({'educate': 0})
+	augroup END
+<
+
+The last autocmd statement initializes the plugin for buffers of text file
+type, but disables the ‘educate’ feature by default. More on that below.
+
+==============================================================================
+MOTION COMMANDS					*textobj-quote-motion-commands*
+
+Motion commands on text objects are a powerful feature of Vim.
+
+By default, for motion commands, q denotes an operation on “double” quotes.
+Q for ‘single’ quotes. For example, with the c change operator: >
+	caq - change around “double” quotes - includes quote chars
+	ciq - change inside “double” quotes - excludes quote chars
+	caQ - change around ‘single’ quotes - includes quote chars
+	ciQ - change inside ‘single’ quotes - excludes quote chars
+<
+
+Apart from |c| for change, the plugin also supports |v| for visual selection,
+|d| for deletion, |y| for yanking to clipboard, etc. Note that count isn’t
+supported at present (due to limitations of the underlying vim-textobj-user
+plugin) but repeat with |.| should work.
+
+The plugin’s motion command is smart too, able to distinguish between an
+apostrophe and single closing quote, even though both are represented by the
+same glyph. For example, try out viQ on the following sentence:
+
+	‘Really, I’d rather not relive the ’70s,’ said zombie Elvis.
+
+You can change these key mappings from their defaults in your .vimrc: >
+	let g:textobj#quote#doubleMotion = 'q'
+	let g:textobj#quote#singleMotion = 'Q'
+<
+
+==============================================================================
+ADDITIONAL FEATURES				*textobj-quote-additional-features*
+
+The four additional features of this plugin are educate, matchit, replace, and
+surround.
+
+------------------------------------------------------------------------------
+EDUCATE						*textobj-quote-educate*
+
+This plugin can‘educate’ quotes, meaning that while in Insert mode, your
+straight quote key presses (" or ') will be dynamically transformed into the
+appropriate typographic quote characters.
+
+For example, entering the following sentence without the educate feature using
+the straight quote keys:
+
+	"It's Dr. Evil. I didn't spend six years in Evil Medical
+	School to be called 'mister,' thank you very much."
+
+As expected all the quotes are straight ones. But with the educate feature,
+the straight quotes are transformed into the typographic equivalent as you
+type:
+
+	“It’s Dr. Evil. I didn’t spend six years in Evil Medical
+	School to be called ‘mister,’ thank you very much.”
+
+You can configure the default settings for the educate feature in your .vimrc: >
+	let g:textobj#quote#educate = 1       " 0=disable, 1=enable (def)
+<
+
+You can change educating behavior with the following commands: >
+	Educate
+	NoEducate
+	ToggleEducate
+<
+
+These commands can be used during an editing session, if you need to switch
+between modes. But they can also be used in autocommands. For example, imagine
+that you want typographic quotes in markdown files, but not within code
+sections of a markdown document. The following handles that automatically. >
+	function! IsMarkdownCode()
+		let line = line(".")
+		let synstack = synstack(line, 1)
+		let syn = empty(synstack) ? "" : synIDattr(synstack[0], "name")
+		let is_markdown_code = syn =~# 'markdown\(Code\(Block\)\?\|Highlight*\)'
+		return is_markdown_code
+	endfunction
+
+	augroup textobj_quote
+		autocmd!
+		autocmd FileType markdown call textobj#quote#init()
+		autocmd CursorMoved,CursorMovedI,WinEnter *.md
+			\ if IsMarkdownCode() |
+			\ 	NoEducate |
+			\ else |
+			\ 	Educate |
+			\ endif
+	augroup END
+<
+
+As seen above, educating behavior can be configured as a parameter in the
+textobj#quote#init() call.
+
+------------------------------------------------------------------------------
+MATCHIT						*textobj-quote-matchit*
+
+matchit enables jumping to matching typographic quotes. >
+	% " jump to the matching typographic (curly) quote character
+<
+
+You can configure this feature in your .vimrc: >
+	let g:textobj#quote#matchit = 1 " 0=disable, 1=enable (default)
+<
+
+------------------------------------------------------------------------------
+REPLACE						*textobj-quote-replace*
+
+You can replace straight quotes in existing text with curly quotes, and visa
+versa. Add key mappings of your choice to your .vimrc: >
+	map <silent> <leader>qc <Plug>ReplaceWithCurly
+	map <silent> <leader>qs <Plug>ReplaceWithStraight
+<
+
+Both Normal and Visual modes are supported by this feature.
+
+To transform all quotes in a document, use Visual mode to select all the text
+in the document.
+
+------------------------------------------------------------------------------
+SURROUND					*textobj-quote-surround*
+
+By default there are no key mappings for surround support. However, there are
+options available if you want them.
+
+------------------------------------------------------------------------------
+BASIC SURROUND					*textobj-quote-basic-surround*
+
+This feature supports basic surround capabilities. Add to your .vimrc key
+mappings of your choice: >
+	" NOTE: remove these mappings if using the tpope/vim-surround plugin!
+	map <silent> Sq <Plug>SurroundWithDouble
+	map <silent> SQ <Plug>SurroundWithSingle
+<
+
+Then you can use ‘motion commands’ to surround text with quotes. The asterisk
+denotes the cursor’s position. >
+	visSq - My senten*ce. => “My sentence.”
+	visSQ - My senten*ce. => ‘My sentence.’
+<
+
+------------------------------------------------------------------------------
+VIM-SURROUND					*textobj-quote-vim-surround*
+
+Using Tim Pope’s vim-surround plugin your text object key mappings should be
+available. For example, >
+	cs'q - 'Hello W*orld' => “Hello World”
+	cs"q - "Hello W*orld" => “Hello World”
+	cs(q - (Hello W*orld) => “Hello World”
+	cs(Q - (Hello W*orld) => ‘Hello World’
+<
+
+==============================================================================
+SPECIAL CASES					*textobj-quote-special-cases*
+
+The following sections discuss less common circumstances or requirements and
+how to handle them.
+
+------------------------------------------------------------------------------
+STRAIGHT QUOTES					*textobj-quote-straight-quotes*
+
+In some cases, straight (ASCII) quotes are needed, such as:
+
+	“print "Hello World!"” is a simple program you can write in Python.
+
+To insert a straight quote while educating, enter Ctrl-V (mnemonic is
+verbatim) before the quote key:
+
+	Ctrl-V followed by " - straight double quote
+	Ctrl-V followed by ' - straight single quote
+
+For more details, see |c_CTRL-V|. Also note that for units of measurement
+you’ll want to use the prime symbol(s) rather than straight quotes, as in:
+
+	Standing at 7′3″ (2.21 m), Hasheem Thabeet of the Oklahoma City
+	Thunder is the tallest player in the NBA.
+
+See below if you are unsure of how to enter prime symbols in Vim.
+
+------------------------------------------------------------------------------
+DIGRAPHS					*textobj-quote-digraphs*
+
+Sometimes you must enter special characters (like typographic quotes)
+manually, such as in a search expression. You can do so through Vim’s digraphs
+or via your operating system’s keyboard shortcuts.
+
+| Glyph | Vim Digraph | OS X               | Description
+| ----- | ----------- | ------------------ | ----------------------------
+| ‘     | '6          | Opt-]              | left single quotation mark
+| ’     | '9          | Shift-Opt-]        | right single quotation mark
+| “     | "6          | Opt-[              | left double quotation mark
+| ”     | "9          | Shift-Opt-[        | right double quotation mark
+| ‚     | .9          |                    | single low-9 quote
+| „     | :9          | Shift-Opt-w        | double low-9 quote
+| ‹     | 1<          | Opt-\              | left pointing single quotation mark
+| ›     | 1>          | Shift-Opt-\        | right pointing single quotation mark
+| «     | <<          | Opt-\              | left pointing double quotation mark
+| »     | >>          | Shift-Opt-\        | right pointing double quotation mark
+| ′     | 1'          |                    | single prime
+| ″     | 2'          |                    | double prime
+| –     | -N          | Opt-hyphen         | en dash
+| —     | -M          | Shift-Opt-hyphen   | em dash
+| …     | ..          | Opt-;              | horizontal ellipsis
+|       | NS          |                    | non-breaking space
+| ï     | i:          | Opt-U i            | lowercase i, umlaut
+| æ     | ae          | Opt-'              | lowercase ae
+
+To enter the Vim digraphs, you need to precede them with Ctrl-K. For example,
+Ctrl-K followed by "6 will enter ”. For more information, see |digraphs| and
+|c_CTRL-K|.
+
+------------------------------------------------------------------------------
+INTERNATIONAL USE				*textobj-quote-international-use*
+
+Many international keyboards feature keys to allow you to input typographic
+quote characters directly. In such cases, you won’t need to change the
+behavior of the straight quote keys.
+
+But if you do, you can override the defaults. For example, those users editing
+most of their prose in German could change those defaults to: >
+	let g:textobj#quote#doubleDefault = '„“'     " „doppel“
+	let g:textobj#quote#singleDefault = '‚‘'     " ‚einzel‘
+<
+
+Or on a file type initialization... >
+	augroup textobj_quote
+		autocmd!
+		autocmd FileType markdown call textobj#quote#init({ 'double':'„“', 'single':'‚‘' })
+		...
+	augroup END
+<
+
+Or in a key mapping... >
+	nnoremap <silent> <leader>qd :call textobj#quote#init({ 'double':'„“', 'single':'‚‘' })<cr>
+<
+
+==============================================================================
+SPELL CHECKING					*textobj-quote-spell-checking*
+
+Vim’s spell checking may not support words with typographical apostrophes. For
+example, Vim may consider “isn’t” to be misspelled, even though it isn’t.
+There are several ways to address this, but here is one that works well. (The
+example uses English spelling files for the example, but you can substitute
+any language.)
+
+First, you need to get spelling files for vim to build a dictionary. (See
+|aff-dic-format|.) E.g., https://cgit.freedesktop.org/libreoffice/dictionaries/tree.
+Copy or unpack those files to ~/.vim/spell, and then run this perl one-liner: >
+	perl -i.bak -ne "print; print if s/'/’/g" en_US.dic
+<
+
+Then open Vim and do the following: >
+	:mkspell en en_US
+	" Use mkspell! if you already have a dictionary with that name.
+	" See |mkspell| for further details of this command.
+<
+
+This method creates two entries for all words with apostrophes in them: one
+with a straight apostrophe and one with a typographic apostrophe. Thus, Vim
+will consider both “isn't” and “isn’t” to be correctly spelled. Which is great
+because they both are! Now you can type one version in code comments and
+another in an email, and Vim won’t bother you.
+
+==============================================================================
+SEE ALSO					*textobj-quote-see-also*
+
+If you find this plugin useful, check out these others by reedes
+(http://github.com/reedes):
+
+	- vim-colors-pencil: color scheme for Vim inspired by IA Writer
+	  http://github.com/reedes/vim-colors-pencil
+	- vim-lexical: building on Vim’s spell-check and thesaurus/dictionary completion
+	  http://github.com/reedes/vim-lexical
+	- vim-litecorrect: lightweight auto-correction for Vim
+	  http://github.com/reedes/vim-litecorrect
+	- vim-one: make use of Vim’s +clientserver capabilities
+	  http://github.com/reedes/vim-one
+	- vim-pencil: rethinking Vim as a tool for writers
+	  http://github.com/reedes/vim-pencil
+	- vim-textobj-sentence: improving on Vim's native sentence motion command
+	  http://github.com/reedes/vim-textobj-sentence
+	- vim-thematic: modify Vim’s appearance to suit your task and environment
+	  http://github.com/reedes/vim-thematic
+	- vim-wheel: screen-anchored cursor movement for Vim
+	  http://github.com/reedes/vim-wheel
+	- vim-wordy: uncovering usage problems in writing
+	  http://github.com/reedes/vim-wordy
+	- vim-wordchipper: power tool for shredding text in Insert mode
+	  http://github.com/reedes/vim-wordchipper
+
+==============================================================================
+FUTURE DEVELOPMENT				*textobj-quote-future-development*
+
+If you’ve spotted a problem or have an idea on improving this plugin, please
+post it to the GitHub project issue page.
+
+	https://github.com/reedes/vim-textobj-quote/issues
+
+We would especially like to integrate this plugin better with existing
+surround plugins.
+
+==============================================================================
+LICENSE						*textobj-quote-license*
+
+The MIT License (MIT)
+
+Copyright (c) 2013-2020 Reed Esau
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+vim:tw=78:ts=8:noet:ft=help:norl
