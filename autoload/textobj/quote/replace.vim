@@ -12,7 +12,7 @@ if exists('g:autoloaded_textobj_quote_replace') &&
 en
 
 " Copied from vim-yoink
-function! textobj#quote#replace#getDefaultReg()
+function! textobj#quote#replace#getDefaultReg() abort
     let clipboardFlags = split(&clipboard, ',')
     if index(clipboardFlags, 'unnamedplus') >= 0
         return "+"
@@ -23,7 +23,7 @@ function! textobj#quote#replace#getDefaultReg()
     endif
 endfunction
 
-function! textobj#quote#replace#replace(mode, visual)
+function! textobj#quote#replace#replace(mode, visual) abort
   " 0=C->S  1=S->C
   if !exists('b:textobj_quote_dl') | return | endif
   " Extract the target text...

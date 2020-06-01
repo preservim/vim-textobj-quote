@@ -13,12 +13,12 @@ if &cp || (  exists('g:autoloaded_textobj_quote') &&
   finish
 endif
 
-function! s:unicode_enabled()
+function! s:unicode_enabled() abort
   return &encoding == 'utf-8'
 endfunction
 
 " generate a regex for select, allowing for contractions
-function! s:get_select_re(l, r, inner)
+function! s:get_select_re(l, r, inner) abort
   return
     \ '\v' .
     \ a:l .
@@ -29,7 +29,7 @@ function! s:get_select_re(l, r, inner)
     \ (a:r == '’' ? '(\w)@!' : '')
 endfunction
 
-function! s:select(pattern)
+function! s:select(pattern) abort
   call search(a:pattern, 'bc')
   let l:start = getpos('.')
   call search(a:pattern, 'ce')
@@ -37,33 +37,35 @@ function! s:select(pattern)
   return ['v', l:start, l:end]
 endfunction
 
-function! textobj#quote#select_d_a()
+function! textobj#quote#select_d_a() abort
   if !exists('b:textobj_quote_re_d_a')
     call textobj#quote#init()
   endif
   return s:select(b:textobj_quote_re_d_a)
 endfunction
-function! textobj#quote#select_d_i()
+
+function! textobj#quote#select_d_i() abort
   if !exists('b:textobj_quote_re_d_i')
     call textobj#quote#init()
   endif
   return s:select(b:textobj_quote_re_d_i)
 endfunction
 
-function! textobj#quote#select_s_a()
+function! textobj#quote#select_s_a() abort
   if !exists('b:textobj_quote_re_s_a')
     call textobj#quote#init()
   endif
   return s:select(b:textobj_quote_re_s_a)
 endfunction
-function! textobj#quote#select_s_i()
+
+function! textobj#quote#select_s_i() abort
   if !exists('b:textobj_quote_re_s_i')
     call textobj#quote#init()
   endif
   return s:select(b:textobj_quote_re_s_i)
 endfunction
 
-function! textobj#quote#getPrevCharRE(mode)
+function! textobj#quote#getPrevCharRE(mode) abort
   " regex to match previous character
   " mode=1 is double; mode=0 is single
   return '\v(^|[[({& ' .
@@ -75,7 +77,7 @@ endfunction
 " set up mappings for current buffer only
 " initialize buffer-scoped variables
 " args: { 'double':'“”', 'single':'‘’',}
-function! textobj#quote#init(...)
+function! textobj#quote#init(...) abort
   if !s:unicode_enabled() | return | endif
 
   let l:args = a:0 ? a:1 : {}

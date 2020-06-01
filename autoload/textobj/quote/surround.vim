@@ -11,7 +11,7 @@ if exists('g:autoloaded_textobj_quote_surround') &&
   fini
 en
 
-function! textobj#quote#surround#surround(mode, visual)
+function! textobj#quote#surround#surround(mode, visual) abort
   " A simple alternative to Tim Pope's vim-surround
   " wrap word/selection in curly quotes
   " mode=1 is double; mode=0 is single
