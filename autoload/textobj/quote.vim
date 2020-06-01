@@ -8,7 +8,7 @@
 
 scriptencoding utf-8
 
-if &cp || (  exists('g:autoloaded_textobj_quote') &&
+if &compatible || (  exists('g:autoloaded_textobj_quote') &&
           \ !exists('g:force_reload_textobj_quote'))
   finish
 endif
