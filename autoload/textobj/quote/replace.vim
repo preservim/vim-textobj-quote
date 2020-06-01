@@ -15,11 +15,11 @@ en
 function! textobj#quote#replace#getDefaultReg() abort
     let clipboardFlags = split(&clipboard, ',')
     if index(clipboardFlags, 'unnamedplus') >= 0
-        return "+"
+        return '+'
     elseif index(clipboardFlags, 'unnamed') >= 0
-        return "*"
+        return '*'
     else
-        return "\""
+        return '"'
     endif
 endfunction
 
@@ -28,9 +28,9 @@ function! textobj#quote#replace#replace(mode, visual) abort
   if !exists('b:textobj_quote_dl') | return | endif
   " Extract the target text...
   if len(a:visual) > 0
-      execute "normal! gv\"" . textobj#quote#replace#getDefaultReg() . "y"
+      execute 'normal! gv"' . textobj#quote#replace#getDefaultReg() . 'y'
     else
-      execute "normal! vi\"" . textobj#quote#replace#getDefaultReg() . "py"
+      execute 'normal! vi"' . textobj#quote#replace#getDefaultReg() . 'py'
   endif
   let l:text = getreg(textobj#quote#replace#getDefaultReg())
 
@@ -46,7 +46,7 @@ function! textobj#quote#replace#replace(mode, visual) abort
 
   " Paste back into buffer in place of original...
   call setreg(textobj#quote#replace#getDefaultReg(), l:text, mode())
-  execute "normal! gv\"" . textobj#quote#replace#getDefaultReg() . "p"
+  execute 'normal! gv"' . textobj#quote#replace#getDefaultReg() . 'p'
 endfunction
 
 let g:autoloaded_textobj_quote_replace = 1

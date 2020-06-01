@@ -25,9 +25,9 @@ function! textobj#quote#surround#surround(mode, visual) abort
   endif
   if a:visual ==# 'v'
     " note: the gv re-establishes the visual selection that <C-u> removed
-    execute "normal! gvc" . l:l . "\<C-r>\"" . l:r ."\<Esc>"
+    execute 'normal! gvc' . l:l . '\<C-r>"' . l:r .'\<Esc>'
   elseif a:visual ==# ''
-    execute "normal! ciw" . l:l . "\<C-r>\"" . l:r . "\<Esc>"
+    execute 'normal! ciw' . l:l . '\<C-r>"' . l:r . '\<Esc>'
   endif
 endfunction
 

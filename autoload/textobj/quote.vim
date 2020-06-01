@@ -116,7 +116,7 @@ function! textobj#quote#init(...) abort
   " initialize extensions
 
   if get(l:args, 'matchit', g:textobj#quote#matchit) &&
-   \ exists("b:match_words")
+   \ exists('b:match_words')
     " support '%' navigation of textobj_quote pairs
     if b:textobj_quote_dl != b:textobj_quote_dr
       " specialized closing pattern to ignore use of quote in contractions
