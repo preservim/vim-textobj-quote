@@ -16,6 +16,9 @@ jobs:
         sudo add-apt-repository universe
         sudo apt-get update
         sudo apt-get install neovim
+    - name: Install plugin dependencies
+      run: |
+        git clone https://github.com/kana/vim-textobj-user.git
     - name: Install Vader
       run: |
         git clone https://github.com/junegunn/vader.vim.git
@@ -26,6 +29,7 @@ jobs:
         cat << EOF > .min.vim
         set nocompatible
         filetype off
+        set rtp+=vim-textobj-user
         set rtp+=vader.vim
         set rtp+=.
         EOF
