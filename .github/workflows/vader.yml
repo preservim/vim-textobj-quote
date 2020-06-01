@@ -1,0 +1,35 @@
+name: Vader
+on: [push, pull_request]
+jobs:
+  check:
+    strategy:
+      fail-fast: false
+      matrix:
+        vimFlavor: ["vim", "nvim"]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install ${{ matrix.vimFlavor }}
+      if: matrix.vimFlavor == 'nvim'
+      run: |
+        sudo add-apt-repository universe
+        sudo apt-get update
+        sudo apt-get install neovim
+    - name: Install Vader
+      run: |
+        git clone https://github.com/junegunn/vader.vim.git
+    - name: Review ${{ matrix.vimFlavor }} version
+      run: ${{ matrix.vimFlavor }} --version
+    - name: Create minimal RC file
+      run: |
+        cat << EOF > .min.vim
+        set nocompatible
+        filetype off
+        set rtp+=vader.vim
+        set rtp+=.
+        EOF
+    - name: Run Vader in ${{ matrix.vimFlavor }}
+      run: |
+        ${{ matrix.vimFlavor == 'nvim' && 'nvim --headless' || 'vim -Es' }} \
+          -i NONE -u .min.vim '+Vader! tests/*.vader' > /dev/null
