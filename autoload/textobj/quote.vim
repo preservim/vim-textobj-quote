@@ -14,7 +14,7 @@ if &cp || (  exists('g:autoloaded_textobj_quote') &&
 endif
 
 function! s:unicode_enabled() abort
-  return &encoding == 'utf-8'
+  return &encoding ==# 'utf-8'
 endfunction
 
 " generate a regex for select, allowing for contractions
@@ -26,7 +26,7 @@ function! s:get_select_re(l, r, inner) abort
     \ '\_.{-}' .
     \ (a:inner ? '\ze' : '') .
     \ a:r .
-    \ (a:r == '’' ? '(\w)@!' : '')
+    \ (a:r ==# '’' ? '(\w)@!' : '')
 endfunction
 
 function! s:select(pattern) abort
@@ -122,7 +122,7 @@ function! textobj#quote#init(...) abort
       " specialized closing pattern to ignore use of quote in contractions
       let b:match_words .= ',' . b:textobj_quote_dl .
                           \':' . b:textobj_quote_dr .
-                          \      (b:textobj_quote_dr == '’'
+                          \      (b:textobj_quote_dr ==# '’'
                           \       ? '\(\W\|$\)'
                           \       : '')
     endif
@@ -130,7 +130,7 @@ function! textobj#quote#init(...) abort
       " specialized closing pattern to ignore use of quote in contractions
       let b:match_words .= ',' . b:textobj_quote_sl .
                           \':' . b:textobj_quote_sr .
-                          \      (b:textobj_quote_sr == '’'
+                          \      (b:textobj_quote_sr ==# '’'
                           \       ? '\(\W\|$\)'
                           \       : '')
     endif

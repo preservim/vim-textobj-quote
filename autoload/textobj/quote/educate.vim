@@ -12,7 +12,7 @@ if exists('g:autoloaded_textobj_quote_educate') &&
 en
 
 function! s:unicode_enabled() abort
-  return &encoding == 'utf-8'
+  return &encoding ==# 'utf-8'
 endfunction
 
 function! s:educateQuotes(mode) abort
