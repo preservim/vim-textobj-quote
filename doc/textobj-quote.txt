@@ -369,11 +369,11 @@ There are several ways to address this, but here is one that works well. (The
 example uses English spelling files, but you can substitute any language.)
 
 First, you need to get spelling files for vim to build a dictionary. (See
-|aff-dic-format|.) For example, you can find some here:
+|aff-dic-format|.) For example, you can find some at the following link.
 
-	https://cgit.freedesktop.org/libreoffice/dictionaries/tree.
+	https://extensions.libreoffice.org/en/extensions/show/english-dictionaries
 
-Copy or unpack those files to ~/.vim/spell, and then run this perl one-liner: >
+Copy or unpack those files to ~/.vim/spell and run this perl one-liner: >
 	perl -i.bak -ne "print; print if s/'/’/g" en_US.dic
 <
 
