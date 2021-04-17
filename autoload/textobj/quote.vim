@@ -17,52 +17,6 @@ function! s:unicode_enabled()
   return &encoding == 'utf-8'
 endfunction
 
-" generate a regex for select, allowing for contractions
-function! s:get_select_re(l, r, inner)
-  return
-    \ '\v' .
-    \ a:l .
-    \ (a:inner ? '\zs' : '') .
-    \ '\_.{-}' .
-    \ (a:inner ? '\ze' : '') .
-    \ a:r .
-    \ (a:r == '’' ? '(\w)@!' : '')
-endfunction
-
-function! s:select(pattern)
-  call search(a:pattern, 'bc')
-  let l:start = getpos('.')
-  call search(a:pattern, 'ce')
-  let l:end = getpos('.')
-  return ['v', l:start, l:end]
-endfunction
-
-function! textobj#quote#select_d_a()
-  if !exists('b:textobj_quote_re_d_a')
-    call textobj#quote#init()
-  endif
-  return s:select(b:textobj_quote_re_d_a)
-endfunction
-function! textobj#quote#select_d_i()
-  if !exists('b:textobj_quote_re_d_i')
-    call textobj#quote#init()
-  endif
-  return s:select(b:textobj_quote_re_d_i)
-endfunction
-
-function! textobj#quote#select_s_a()
-  if !exists('b:textobj_quote_re_s_a')
-    call textobj#quote#init()
-  endif
-  return s:select(b:textobj_quote_re_s_a)
-endfunction
-function! textobj#quote#select_s_i()
-  if !exists('b:textobj_quote_re_s_i')
-    call textobj#quote#init()
-  endif
-  return s:select(b:textobj_quote_re_s_i)
-endfunction
-
 function! textobj#quote#getPrevCharRE(mode)
   " regex to match previous character
   " mode=1 is double; mode=0 is single
@@ -90,24 +44,18 @@ function! textobj#quote#init(...)
   let b:textobj_quote_sl = l:s_arg[0]
   let b:textobj_quote_sr = l:s_arg[1]
 
-  " the 'inner' and 'outer' patterns used in select functions
-  let b:textobj_quote_re_d_i = s:get_select_re(b:textobj_quote_dl, b:textobj_quote_dr, 1)
-  let b:textobj_quote_re_d_a = s:get_select_re(b:textobj_quote_dl, b:textobj_quote_dr, 0)
-  let b:textobj_quote_re_s_i = s:get_select_re(b:textobj_quote_sl, b:textobj_quote_sr, 1)
-  let b:textobj_quote_re_s_a = s:get_select_re(b:textobj_quote_sl, b:textobj_quote_sr, 0)
-
   call textobj#user#plugin('quote', {
   \      'select-d': {
   \         'select-a': 'a' . g:textobj#quote#doubleMotion,
   \         'select-i': 'i' . g:textobj#quote#doubleMotion,
-  \         '*select-a-function*': 'textobj#quote#select_d_a',
-  \         '*select-i-function*': 'textobj#quote#select_d_i',
+  \         'pattern': [ b:textobj_quote_dl, b:textobj_quote_dr ]
   \      },
   \      'select-s': {
   \         'select-a': 'a' . g:textobj#quote#singleMotion,
   \         'select-i': 'i' . g:textobj#quote#singleMotion,
-  \         '*select-a-function*': 'textobj#quote#select_s_a',
-  \         '*select-i-function*': 'textobj#quote#select_s_i',
+  \         'pattern': [ b:textobj_quote_sl,
+  \                     (b:textobj_quote_sr == '’' ? b:textobj_quote_sr .
+  \                     '\(\w\)\@!' : b:textobj_quote_sr) ]
   \      },
   \})
 
