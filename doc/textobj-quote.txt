@@ -1,4 +1,4 @@
-*textobj-quote.txt*	Support typographic (“‘curly’”) quote characters.
+*textobj-quote.txt*	Support typographic quote characters.
 
 ==============================================================================
 CONTENTS					*textobj-quote-contents*
