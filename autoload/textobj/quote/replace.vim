@@ -30,7 +30,7 @@ function! textobj#quote#replace#replace(mode, visual)
   if len(a:visual) > 0
       execute "normal! gv\"" . textobj#quote#replace#getDefaultReg() . "y"
     else
-      execute "normal! vi\"" . textobj#quote#replace#getDefaultReg() . "py"
+      execute "normal! vip\"" . textobj#quote#replace#getDefaultReg() . "y"
   endif
   let l:text = getreg(textobj#quote#replace#getDefaultReg())
 

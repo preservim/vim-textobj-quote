@@ -6,7 +6,7 @@
 
 [vq]: https://github.com/reedes/vim-quotable
 
-While Vim is renown for its text manipulation capabilities, it
+While Vim is renowned for its text manipulation capabilities, it
 nevertheless retains a bias towards ASCII that stretches back to its vi
 roots on Unix. This can limit Vim’s appeal for those who prefer
 typographic characters like “curly quotes” over ASCII "straight quotes" in
@@ -187,10 +187,11 @@ map <silent> <leader>qc <Plug>ReplaceWithCurly
 map <silent> <leader>qs <Plug>ReplaceWithStraight
 ```
 
-Both _Normal_ and _Visual_ modes are supported by this feature.
+Both _Normal_ and _Visual_ modes are supported by this feature. (In
+_Normal_ mode, quotes in the current paragraph are replaced.)
 
-To transform all quotes in a document, use _Visual_ mode to select all the
-text in the document.
+To transform all quotes in a document, use _Visual_ mode to select the
+entire document.
 
 ### Surround support
 
