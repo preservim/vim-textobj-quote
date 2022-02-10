@@ -71,3 +71,13 @@ Do (select single over multiple lines):
 Expect:
   ‘REALLY, I’D RATHER NOT RELIVE THE ’70S,’ said zombie Elvis.
 
+###########################################################
+
+Given:
+  hello
+Do (select where there is no match):
+  daq
+
+Expect:
+  hello
+

@@ -1,0 +1,45 @@
+name: Vader
+on: [push, pull_request]
+jobs:
+  vader:
+    name: vader
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        vimFlavor: ["vim", "nvim"]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Enable Universe package repository
+      run: |
+        sudo add-apt-repository universe
+        sudo apt-get update
+    - name: Install ${{ matrix.vimFlavor }}
+      run: |
+        sudo apt-get install ${{ matrix.vimFlavor == 'nvim' && 'neovim' || 'vim' }}
+    - name: Review versions
+      run: |
+        ${{ matrix.vimFlavor }} --version
+    - name: Fetch Vader and other dependencies
+      run: |
+        git clone --depth 1 https://github.com/junegunn/vader.vim.git
+        git clone --depth 1 https://github.com/kana/vim-textobj-user.git
+        git clone --depth 1 https://github.com/tpope/vim-surround.git
+    - name: Create minimal vimrc file
+      run: |
+        cat << EOF > .minrc
+        set nocompatible
+        filetype off
+        set rtp+=vader.vim
+        set rtp+=vim-textobj-user
+        set rtp+=vim-surround
+        set rtp+=.
+        filetype plugin indent on
+        syntax enable
+        set shortmess+=I
+        EOF
+    - name: Run test suite
+      run: |
+        ${{ matrix.vimFlavor == 'nvim' && 'nvim --headless' || 'vim -N' }} \
+          -i NONE -u .minrc "+Vader! spec/*"

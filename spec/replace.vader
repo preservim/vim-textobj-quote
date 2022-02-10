@@ -1,0 +1,61 @@
+Execute (Clean up test environment):
+  call textobj#quote#init({'replace':1})
+  map <silent> ; <Plug>ReplaceWithCurly
+  map <silent> \ <Plug>ReplaceWithStraight
+
+###########################################################
+Given:
+  "It's 'Dr.' Evil, thank you very much," he said. Then I said, "What do you
+  know about it anyhow. You aren't very nice, are you?" Then he stormed off,
+  and I haven't seen him since.
+
+Do (Curl quotes in normal mode):
+  ;
+
+Expect:
+  “It’s ‘Dr.’ Evil, thank you very much,” he said. Then I said, “What do you
+  know about it anyhow. You aren’t very nice, are you?” Then he stormed off,
+  and I haven’t seen him since.
+
+###########################################################
+Given:
+  “It’s ‘Dr.’ Evil, thank you very much,” he said. Then I said, “What do you
+  know about it anyhow. You aren’t very nice, are you?” Then he stormed off,
+  and I haven’t seen him since.
+
+Do (Straighten quotes in normal mode):
+  \
+
+Expect:
+  "It's 'Dr.' Evil, thank you very much," he said. Then I said, "What do you
+  know about it anyhow. You aren't very nice, are you?" Then he stormed off,
+  and I haven't seen him since.
+
+
+Given:
+  "It's 'Dr.' Evil, thank you very much," he said. Then I said, "What do you
+  know about it anyhow. You aren't very nice, are you?" Then he stormed off,
+  and I haven't seen him since.
+
+Do (Curl quotes in visual mode):
+  vip;
+
+Expect:
+  “It’s ‘Dr.’ Evil, thank you very much,” he said. Then I said, “What do you
+  know about it anyhow. You aren’t very nice, are you?” Then he stormed off,
+  and I haven’t seen him since.
+
+
+Given:
+  “It’s ‘Dr.’ Evil, thank you very much,” he said. Then I said, “What do you
+  know about it anyhow. You aren’t very nice, are you?” Then he stormed off,
+  and I haven’t seen him since.
+
+Do (Straighten quotes in visual mode):
+  vip\
+
+Expect:
+  "It's 'Dr.' Evil, thank you very much," he said. Then I said, "What do you
+  know about it anyhow. You aren't very nice, are you?" Then he stormed off,
+  and I haven't seen him since.
+

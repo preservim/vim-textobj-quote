@@ -1,5 +1,5 @@
-# NOT WORKING YET FOR REASONS UNEXPLAINED
 Execute (Clean up test environment):
+  let b:match_words=''
   call textobj#quote#init()
 
 ###########################################################

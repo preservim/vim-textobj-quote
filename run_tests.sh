@@ -1,7 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 VIMRC="$TMPDIR/mini-vimrc"
-SOURCE="$HOME/.vim/bundle/vim-textobj-quote"
 
 cat > $VIMRC << EOF
 set nocompatible
@@ -11,11 +10,10 @@ set shortmess+=I
 for dep in ['vader.vim', 'vim-textobj-user']
   execute 'set rtp+=' . finddir(dep, expand('~/.vim').'/**')
 endfor
-set rtp+=$SOURCE
+set rtp+=.
 EOF
 
-cd $SOURCE/test
-vim -u $VIMRC +Vader*
+vim -u $VIMRC "+Vader spec/*"
 #vim -u $VIMRC '+Vader!*' && echo Success || echo Failure
 
 rm -f $VIMRC

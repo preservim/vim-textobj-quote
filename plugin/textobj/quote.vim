@@ -56,14 +56,14 @@ endif
 " needed to match pairs of quotes (via tpope/vim-sensible)
 if g:textobj#quote#matchit &&
       \ !exists('g:loaded_matchit') &&
-      \ findfile('plugin/matchit.vim', &rtp) ==# ''
+      \ findfile('plugin/matchit.vim', &runtimepath) ==# ''
   runtime! macros/matchit.vim
 endif
 
 " commands to toggle key mappings
-command! -nargs=0 Educate call textobj#quote#educate#mapKeys(1)
-command! -nargs=0 NoEducate call textobj#quote#educate#mapKeys(0)
-command! -nargs=0 ToggleEducate call textobj#quote#educate#toggleMappings()
+command! -nargs=0 -bar Educate call textobj#quote#educate#mapKeys(1)
+command! -nargs=0 -bar NoEducate call textobj#quote#educate#mapKeys(0)
+command! -nargs=0 -bar ToggleEducate call textobj#quote#educate#toggleMappings()
 
 " replace quotes in bulk
 nnoremap <Plug>ReplaceWithCurly    :call textobj#quote#replace#replace(1, '')<cr>
