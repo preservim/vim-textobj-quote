@@ -26,10 +26,9 @@ jobs:
         git clone --depth 1 https://github.com/junegunn/vader.vim.git
         git clone --depth 1 https://github.com/kana/vim-textobj-user.git
         git clone --depth 1 https://github.com/tpope/vim-surround.git
-    - name: Run test suite
+    - name: Create minimal vimrc file
       run: |
-        ${{ matrix.vimFlavor == 'nvim' && 'nvim --headless' || 'vim -N' }} \
-        -u <(cat << VIMRC
+        cat << EOF > .minrc
         set nocompatible
         filetype off
         set rtp+=vader.vim
@@ -39,5 +38,8 @@ jobs:
         filetype plugin indent on
         syntax enable
         set shortmess+=I
-        VIMRC
-        ) "+Vader! spec/*"
+        EOF
+    - name: Run test suite
+      run: |
+        ${{ matrix.vimFlavor == 'nvim' && 'nvim --headless' || 'vim -N' }} \
+          -i NONE -u .minrc "+Vader! spec/*"

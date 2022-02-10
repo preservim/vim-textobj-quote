@@ -56,7 +56,7 @@ endif
 " needed to match pairs of quotes (via tpope/vim-sensible)
 if g:textobj#quote#matchit &&
       \ !exists('g:loaded_matchit') &&
-      \ findfile('plugin/matchit.vim', &rtp) ==# ''
+      \ findfile('plugin/matchit.vim', &runtimepath) ==# ''
   runtime! macros/matchit.vim
 endif
 

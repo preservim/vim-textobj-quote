@@ -11,11 +11,11 @@ if exists('g:autoloaded_textobj_quote_educate') &&
   fini
 en
 
-function! s:unicode_enabled()
-  return &encoding == 'utf-8'
+function! s:unicode_enabled() abort
+  return &encoding ==# 'utf-8'
 endfunction
 
-function! s:educateQuotes(mode)
+function! s:educateQuotes(mode) abort
   " intelligently insert curly quotes
   " mode=1 is double; mode=0 is single
   return search(
@@ -25,7 +25,7 @@ function! s:educateQuotes(mode)
        \ : (a:mode ? b:textobj_quote_dr : b:textobj_quote_sr)
 endfunction
 
-function! textobj#quote#educate#mapKeys(...)
+function! textobj#quote#educate#mapKeys(...) abort
   " Un/Map keys to un/educate quotes for current buffer
   " 1=map, 0=unmap
   let b:textobj_quote_educate_mapped = a:0 ? !!a:1 : 1
@@ -44,7 +44,7 @@ function! textobj#quote#educate#mapKeys(...)
   endif
 endfunction
 
-function! textobj#quote#educate#toggleMappings()
+function! textobj#quote#educate#toggleMappings() abort
   " Toggle mapped keys for current buffer
   let l:educate =
     \ !exists('b:textobj_quote_educate_mapped')

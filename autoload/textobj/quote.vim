@@ -8,16 +8,16 @@
 
 scriptencoding utf-8
 
-if &cp || (  exists('g:autoloaded_textobj_quote') &&
+if &compatible || (  exists('g:autoloaded_textobj_quote') &&
           \ !exists('g:force_reload_textobj_quote'))
   finish
 endif
 
-function! s:unicode_enabled()
-  return &encoding == 'utf-8'
+function! s:unicode_enabled() abort
+  return &encoding ==# 'utf-8'
 endfunction
 
-function! textobj#quote#getPrevCharRE(mode)
+function! textobj#quote#getPrevCharRE(mode) abort
   " regex to match previous character
   " mode=1 is double; mode=0 is single
   return '\v(^|[[({& ' .
@@ -29,7 +29,7 @@ endfunction
 " set up mappings for current buffer only
 " initialize buffer-scoped variables
 " args: { 'double':'“”', 'single':'‘’',}
-function! textobj#quote#init(...)
+function! textobj#quote#init(...) abort
   if !s:unicode_enabled() | return | endif
 
   let l:args = a:0 ? a:1 : {}
@@ -54,7 +54,7 @@ function! textobj#quote#init(...)
   \         'select-a': 'a' . g:textobj#quote#singleMotion,
   \         'select-i': 'i' . g:textobj#quote#singleMotion,
   \         'pattern': [ b:textobj_quote_sl,
-  \                     (b:textobj_quote_sr == '’' ? b:textobj_quote_sr .
+  \                     (b:textobj_quote_sr ==# '’' ? b:textobj_quote_sr .
   \                     '\(\w\)\@!' : b:textobj_quote_sr) ]
   \      },
   \})
@@ -62,13 +62,13 @@ function! textobj#quote#init(...)
   " initialize extensions
 
   if get(l:args, 'matchit', g:textobj#quote#matchit) &&
-   \ exists("b:match_words")
+   \ exists('b:match_words')
     " support '%' navigation of textobj_quote pairs
     if b:textobj_quote_dl != b:textobj_quote_dr
       " specialized closing pattern to ignore use of quote in contractions
       let b:match_words .= ',' . b:textobj_quote_dl .
                           \':' . b:textobj_quote_dr .
-                          \      (b:textobj_quote_dr == '’'
+                          \      (b:textobj_quote_dr ==# '’'
                           \       ? '\(\W\|$\)'
                           \       : '')
     endif
@@ -76,7 +76,7 @@ function! textobj#quote#init(...)
       " specialized closing pattern to ignore use of quote in contractions
       let b:match_words .= ',' . b:textobj_quote_sl .
                           \':' . b:textobj_quote_sr .
-                          \      (b:textobj_quote_sr == '’'
+                          \      (b:textobj_quote_sr ==# '’'
                           \       ? '\(\W\|$\)'
                           \       : '')
     endif
