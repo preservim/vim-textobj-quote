@@ -15,7 +15,7 @@ Expect:
 
 Given:
 
-Do (basic educate on reedes/vim-textobj#quote/issues/11):
+Do (basic educate on preservim/vim-textobj#quote/issues/11):
   ar'
 
 Expect:

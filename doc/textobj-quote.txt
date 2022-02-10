@@ -407,7 +407,7 @@ CONTRIBUTING					*textobj-quote-contributing*
 If you’ve spotted a problem or have an idea to improve this plugin, please
 post on the project’s GitHub issue page.
 
-	https://github.com/reedes/vim-textobj-quote/issues
+	https://github.com/preservim/vim-textobj-quote/issues
 
 We would especially like to integrate this plugin better with existing
 surround plugins.

@@ -301,7 +301,7 @@ nnoremap <silent> <leader>qd :call textobj#quote#init({ 'double':'„“', 'sing
 
 ## See also
 
-If you find this plugin useful, check out these others by [@reedes][re]:
+If you find this plugin useful, check out these others originally by [@reedes][re]:
 
 * [vim-colors-pencil][cp] - color scheme for Vim inspired by IA Writer
 * [vim-lexical][lx] - building on Vim’s spell-check and thesaurus/dictionary completion
@@ -315,16 +315,16 @@ If you find this plugin useful, check out these others by [@reedes][re]:
 * [vim-wordchipper][wc] - power tool for shredding text in Insert mode
 
 [re]: http://github.com/reedes
-[cp]: http://github.com/reedes/vim-colors-pencil
-[lx]: http://github.com/reedes/vim-lexical
-[lc]: http://github.com/reedes/vim-litecorrect
+[cp]: http://github.com/preservim/vim-colors-pencil
+[lc]: http://github.com/preservim/vim-litecorrect
+[lx]: http://github.com/preservim/vim-lexical
+[pn]: http://github.com/preservim/vim-pencil
+[th]: http://github.com/preservim/vim-thematic
+[ts]: http://github.com/preservim/vim-textobj-sentence
 [vo]: http://github.com/reedes/vim-one
-[pn]: http://github.com/reedes/vim-pencil
-[th]: http://github.com/reedes/vim-thematic
-[ts]: http://github.com/reedes/vim-textobj-sentence
-[wh]: http://github.com/reedes/vim-wheel
-[wo]: http://github.com/reedes/vim-wordy
-[wc]: http://github.com/reedes/vim-wordchipper
+[wc]: http://github.com/preservim/vim-wordchipper
+[wh]: http://github.com/preservim/vim-wheel
+[wo]: http://github.com/preservim/vim-wordy
 
 ## Future development
 
