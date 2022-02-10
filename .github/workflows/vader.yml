@@ -1,39 +1,45 @@
 name: Vader
 on: [push, pull_request]
 jobs:
-  check:
+  vader:
+    name: vader
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         vimFlavor: ["vim", "nvim"]
-    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Install ${{ matrix.vimFlavor }}
-      if: matrix.vimFlavor == 'nvim'
+    - name: Enable Universe package repository
       run: |
         sudo add-apt-repository universe
         sudo apt-get update
-        sudo apt-get install neovim
-    - name: Install plugin dependencies
+    - name: Install ${{ matrix.vimFlavor }}
       run: |
-        git clone https://github.com/kana/vim-textobj-user.git
-    - name: Install Vader
+        sudo apt-get install ${{ matrix.vimFlavor == 'nvim' && 'neovim' || 'vim' }}
+    - name: Review versions
       run: |
-        git clone https://github.com/junegunn/vader.vim.git
-    - name: Review ${{ matrix.vimFlavor }} version
-      run: ${{ matrix.vimFlavor }} --version
-    - name: Create minimal RC file
+        ${{ matrix.vimFlavor }} --version
+    - name: Fetch Vader and other dependencies
       run: |
-        cat << EOF > .min.vim
+        git clone --depth 1 https://github.com/junegunn/vader.vim.git
+        git clone --depth 1 https://github.com/kana/vim-textobj-user.git
+        git clone --depth 1 https://github.com/tpope/vim-surround.git
+    - name: Create minimal vimrc file
+      run: |
+        cat << EOF > .minrc
         set nocompatible
         filetype off
-        set rtp+=vim-textobj-user
         set rtp+=vader.vim
+        set rtp+=vim-textobj-user
+        set rtp+=vim-surround
         set rtp+=.
+        filetype plugin indent on
+        syntax enable
+        set shortmess+=I
         EOF
-    - name: Run Vader in ${{ matrix.vimFlavor }}
+    - name: Run test suite
       run: |
-        ${{ matrix.vimFlavor == 'nvim' && 'nvim --headless' || 'vim -Es' }} \
-          -i NONE -u .min.vim '+Vader! tests/*.vader' > /dev/null
+        ${{ matrix.vimFlavor == 'nvim' && 'nvim --headless' || 'vim -N' }} \
+          -i NONE -u .minrc "+Vader! spec/*"

@@ -1,5 +1,7 @@
 # vim-textobj-quote
 
+[![Vader](https://github.com/preservim/tagbar/workflows/Vader/badge.svg)](https://github.com/preservim/tagbar/actions?workflow=Vader)
+
 > “Extending Vim to better support typographic (‘curly’) quote characters.”
 
 *Note: this project replaces the deprecated [vim-quotable][vq]*
