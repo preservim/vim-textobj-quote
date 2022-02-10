@@ -6,7 +6,7 @@
 
 [vq]: https://github.com/reedes/vim-quotable
 
-While Vim is renown for its text manipulation capabilities, it
+While Vim is renowned for its text manipulation capabilities, it
 nevertheless retains a bias towards ASCII that stretches back to its vi
 roots on Unix. This can limit Vim’s appeal for those who prefer
 typographic characters like “curly quotes” over ASCII "straight quotes" in
@@ -24,7 +24,7 @@ Core features of this plugin:
 Includes four additional features:
 
 * _educate_ - automatic entry of ‘typographic quotes’ from the 'straight quote' keys
-* _replace_ - transform quotes from straight to typographic, and visa versa
+* _replace_ - transform quotes from straight to typographic, and vice versa
 * _matchit_ - `%` matching for typographic quote pairs
 * _surround_ - surround a word or visual selection with quotes
 
@@ -187,10 +187,11 @@ map <silent> <leader>qc <Plug>ReplaceWithCurly
 map <silent> <leader>qs <Plug>ReplaceWithStraight
 ```
 
-Both _Normal_ and _Visual_ modes are supported by this feature.
+Both _Normal_ and _Visual_ modes are supported by this feature. (In
+_Normal_ mode, quotes in the current paragraph are replaced.)
 
-To transform all quotes in a document, use _Visual_ mode to select all the
-text in the document.
+To transform all quotes in a document, use _Visual_ mode to select the
+entire document.
 
 ### Surround support
 
@@ -248,7 +249,7 @@ or via your operating system’s keyboard shortcuts.
 | `″`   | `2'`        |                    | double prime
 | `–`   | `-N`        | `Opt-hyphen`       | en dash
 | `—`   | `-M`        | `Shift-Opt-hyphen` | em dash
-| `…`   | `..`        | `Opt-;`            | horizontal ellipsis
+| `…`   | `,.`        | `Opt-;`            | horizontal ellipsis
 | ` `   | `NS`        |                    | non-breaking space
 | `ï`   | `i:`        | `Opt-U` `i`        | lowercase i, umlaut
 | `æ`   | `ae`        | `Opt-'`            | lowercase ae
