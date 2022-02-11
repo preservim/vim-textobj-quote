@@ -5,10 +5,6 @@
 
 > “Extending Vim to better support typographic (‘curly’) quote characters.”
 
-*Note: this project replaces the deprecated [vim-quotable][vq]*
-
-[vq]: https://github.com/reedes/vim-quotable
-
 While Vim is renowned for its text manipulation capabilities, it
 nevertheless retains a bias towards ASCII that stretches back to its vi
 roots on Unix. This can limit Vim’s appeal for those who prefer
@@ -306,7 +302,6 @@ If you find this plugin useful, check out these others originally by [@reedes][r
 * [vim-colors-pencil][cp] - color scheme for Vim inspired by IA Writer
 * [vim-lexical][lx] - building on Vim’s spell-check and thesaurus/dictionary completion
 * [vim-litecorrect][lc] - lightweight auto-correction for Vim
-* [vim-one][vo] - make use of Vim’s _+clientserver_ capabilities
 * [vim-pencil][pn] - rethinking Vim as a tool for writers
 * [vim-textobj-sentence][ts] - improving on Vim's native sentence motion command
 * [vim-thematic][th] - modify Vim’s appearance to suit your task and environment
@@ -321,7 +316,6 @@ If you find this plugin useful, check out these others originally by [@reedes][r
 [pn]: http://github.com/preservim/vim-pencil
 [th]: http://github.com/preservim/vim-thematic
 [ts]: http://github.com/preservim/vim-textobj-sentence
-[vo]: http://github.com/reedes/vim-one
 [wc]: http://github.com/preservim/vim-wordchipper
 [wh]: http://github.com/preservim/vim-wheel
 [wo]: http://github.com/preservim/vim-wordy
@@ -329,8 +323,8 @@ If you find this plugin useful, check out these others originally by [@reedes][r
 ## Future development
 
 If you’ve spotted a problem or have an idea on improving this plugin,
-please post it to the github project issue page.
+please post it to the [GitHub project issue page][issues].
 
-Needs better integration with existing surround plugins.
+[issues]: https://github.com/preservim/vim-textobj-quote/issues
 
 <!-- vim: set tw=74 :-->
