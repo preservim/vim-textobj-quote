@@ -1,7 +1,7 @@
 " ============================================================================
 " File:        replace.vim
 " Description: autoload functions for replace feature
-" Maintainer:  Reed Esau <github.com/reedes>
+" Maintainer:  preservim <https://github.com/preservim>
 " Created:     February 6, 2013
 " License:     The MIT License (MIT)
 " ============================================================================

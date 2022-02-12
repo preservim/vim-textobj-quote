@@ -1,7 +1,7 @@
 " ============================================================================
 " File:        quote.vim
 " Description: autoload functions for vim-textobj-quote plugin
-" Maintainer:  Reed Esau <github.com/reedes>
+" Maintainer:  preservim <https://github.com/preservim>
 " Created:     February 6, 2013
 " License:     The MIT License (MIT)
 " ============================================================================
