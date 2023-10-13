@@ -38,7 +38,7 @@ manager.
 
 This plugin has an essential dependency that you will need to install:
 
-* [kana/vim-textobject-user][vt] - a Vim plugin to create your own text objects without pain
+* [kana/vim-textobj-user][vt] - a Vim plugin to create your own text objects without pain
 
 [vt]: https://github.com/kana/vim-textobj-user
 
